@@ -3,7 +3,21 @@ import './App.css';
 import Post from './Post'
 
 function App() {
-  const [post,setPosts] = useState([""]);
+  const [posts,setPosts] = useState([{
+    username:"RK" ,
+    caption:"Psych",
+    imageUrl:"https://images.pexels.com/photos/733745/pexels-photo-733745.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  },{
+      username:"Dhananjay",
+      caption:"peace",
+      imageUrl:"https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+
+  },{
+    username:"RxSuri", 
+    caption:"seas the day",
+     imageUrl:"https://images.pexels.com/photos/1424246/pexels-photo-1424246.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  }
+  ]);
 
 
 
@@ -17,9 +31,11 @@ function App() {
 
         </div>
         <h1>Instagram 🔗 !</h1>
-        <Post username="RK" caption="Psych" imageUrl="https://images.pexels.com/photos/733745/pexels-photo-733745.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"/>
-        <Post username="Dhananjay" caption="peace" imageUrl="https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
-        <Post username="RxSuri" caption="seas the day" imageUrl="https://images.pexels.com/photos/1424246/pexels-photo-1424246.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"/>
+       {
+         posts.map(post => (
+              <Post username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+         ))
+       }
 
         {/*header */}
 
