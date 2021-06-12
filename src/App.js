@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Post from './Post';
-import db   from './firebase.js'; 
+import { db }   from './firebase'; 
 import firebase from 'firebase';
 
 function App() {
