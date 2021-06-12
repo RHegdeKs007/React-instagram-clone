@@ -1,13 +1,22 @@
-import React from 'react'
+import React from 'react';
+import './Post.css';
+import Avatar from '@material-ui/core/Avatar';
 
-function Post() {
+function Post({username, caption, imageUrl}) {
     return (
         <div className="post">
-            <h3>Username</h3>
-            {/*headr=>avatar+username*/}
-            <img className="post__image" src="https://images.pexels.com/photos/2246476/pexels-photo-2246476.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
-            {/*image */}
-            <h4>Username : Caption</h4>
+            <div className="post__header">
+            <Avatar
+                className="post__avatar"
+                alt="Rakshith"
+                src="/static" >
+            </Avatar>
+            <h3>{username}</h3>
+            </div>
+           
+            <img className="post__image" src={imageUrl} />
+           
+            <h4 className="post__text"><strong>{username}</strong>: {caption}</h4>
 
         </div>
     )
