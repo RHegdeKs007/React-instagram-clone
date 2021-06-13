@@ -6,11 +6,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import { Input } from '@material-ui/core';
-
+import ImageUpload from './ImageUpload';
 
 
 function getModalStyle() {
-  const top = 50 ;
+  const top = 50 ; //for the signup/signin popup
   const left = 50; 
 
   return {
@@ -21,7 +21,7 @@ function getModalStyle() {
 }
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
+  paper: {                    //style for modal
     position: 'absolute',
     width: 400,
     backgroundColor: theme.palette.background.paper,
@@ -78,7 +78,7 @@ const signUp = (event) => {
   })
   .catch((error) => alert(error.message));
 
-  setOpen(false);
+  setOpen(false); //closes modal after pressing signup
 }
 const signIn = (event) => {
   event.preventDefault();
@@ -87,12 +87,16 @@ const signIn = (event) => {
   .signInWithEmailAndPassword(email,password)
   .catch((error) => alert(error.message))
 
-  setOpenSignIn(false);
+  setOpenSignIn(false); //closes modal after pressing signin
 }
 
 
   return (
     <div className="App">
+
+     <ImageUpload />
+
+
        <Modal
         open={open}
         onClose={()=> setOpen(false)}
