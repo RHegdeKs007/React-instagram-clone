@@ -101,11 +101,7 @@ const signIn = (event) => {
     <div className="App">
 
 
-      {user?.displayName ? (
-       <ImageUpload username={user.displayName} />
-      ) :(
-        <h4>You have to login to upload</h4>
-      )}
+  
 
        <Modal
         open={open}
@@ -155,9 +151,7 @@ const signIn = (event) => {
                 className="app__headerimage"
                 src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png"
                 alt="" />
-
-        </div>
-        {user ?(
+         {user ?(
           <Button onClick={() => auth.signOut()}>Logout</Button>
         ): (
           <div className="app__loginContainer">
@@ -167,14 +161,17 @@ const signIn = (event) => {
           
         )}
       
-        
-        <h1>Instagram 🔗 !</h1>
+        </div>
        {
          posts.map(({id, post}) => (
               <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
          ))
        }
-
+       {user?.displayName ? (
+         <ImageUpload username={user.displayName} />
+          ) :(
+          <h4>You have to login to upload</h4>
+          )}
         {/*header */}
 
 
