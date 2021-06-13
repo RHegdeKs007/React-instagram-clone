@@ -23,10 +23,32 @@ function ImageUpload() {
            "state_changed",
            (snapshot) => {
                //progress function..
-               const progress = math.round(
+               const progress = Math.round(
                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                );
                setProgress(progress);
+           },
+           (error) => {
+               //error function
+               console.log(error);
+               alert(error.message);
+
+           },
+           () => {
+                //complete function..
+                storage
+                    .ref("images")
+                    .child(image.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        //post image inside db
+                        db.collection("posts").add({
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                            caption : caption,
+                            imageUrl: url,
+                            username: username
+                        })
+                    })
            }
        )
     }
