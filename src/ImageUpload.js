@@ -22,7 +22,11 @@ function ImageUpload() {
        uploadTask.on(
            "state_changed",
            (snapshot) => {
-               
+               //progress function..
+               const progress = math.round(
+                   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+               );
+               setProgress(progress);
            }
        )
     }
