@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Post from './Post';
-import { db,auth }   from './firebase'; 
+import { db,auth ,storage}   from './firebase'; 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
@@ -49,8 +49,15 @@ function App() {
     if(authUser){
         console.log(authUser);
         setUser(authUser);
+    if(authUser.displayName){
+
+    } else {
+      return authUser.updateProfile({
+        displayName: username,
+      });
+    }   
     }else {
-        setUser(null)
+        setUser(null);
     }
   })
   return () => {
@@ -60,7 +67,7 @@ function App() {
 }, [user, username]);
 
 useEffect(() => {
-  db.collection('posts').onSnapshot(snapshot => {
+  db.collection('posts').orderBy('timestamp','desc').onSnapshot((snapshot) => {
       setPosts(snapshot.docs.map(doc =>({id: doc.id,
         post: doc.data()})));
   })
@@ -83,8 +90,7 @@ const signUp = (event) => {
 const signIn = (event) => {
   event.preventDefault();
 
-  auth
-  .signInWithEmailAndPassword(email,password)
+  auth.signInWithEmailAndPassword(email,password)
   .catch((error) => alert(error.message))
 
   setOpenSignIn(false); //closes modal after pressing signin
@@ -94,13 +100,17 @@ const signIn = (event) => {
   return (
     <div className="App">
 
-     <ImageUpload />
 
+      {user?.displayName ? (
+       <ImageUpload username={user.displayName} />
+      ) :(
+        <h4>You have to login to upload</h4>
+      )}
 
        <Modal
         open={open}
-        onClose={()=> setOpen(false)}
-      >
+        onClose={()=> setOpen(false)}>
+      
           <div style={modalStyle} className={classes.paper}>
             <form className="app__signup">
               <center>
@@ -112,7 +122,7 @@ const signIn = (event) => {
                   <Input placeholder="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} />      
                   <Input placeholder="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />   
                    <Input placeholder="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/> 
-                   <Button onClick={signUp}>Signup</Button>
+                   <Button type="submit" onClick={signUp}>Signup</Button>
               
           </form>
     </div>
@@ -134,7 +144,7 @@ const signIn = (event) => {
                     
                   <Input placeholder="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />   
                    <Input placeholder="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/> 
-                   <Button onClick={signIn}>SignIn</Button>
+                   <Button type="submit" onClick={signIn}>SignIn</Button>
               
           </form>
     </div>
